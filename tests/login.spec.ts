@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from 'playwright-test-coverage';
 
 test('login test', async ({ page }) => {
   await page.route('*/**/api/auth', async (route) => {
