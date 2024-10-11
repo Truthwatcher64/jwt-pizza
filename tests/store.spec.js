@@ -37,14 +37,4 @@ test('create a store', async ({ page }) => {
 
     await page.getByRole('button', { name: 'Create' }).click();
 
-    //await page.getByPlaceholder('franchise name').click();
-    // let tempString = Math.random().toString(36).substring(2, 12);
-    // await page.getByPlaceholder('franchise name').fill(tempString);
-    // await page.getByPlaceholder('franchise name').press('Tab');
-    // await page.getByPlaceholder('franchisee admin email').fill('a@jwt.com');
-
-    // await page.getByRole('button', { name: 'Create' }).click();
-    // await page.getByRole('cell', { name: tempString }).click();
-    // await page.getByRole('columnheader', { name: 'Franchisee' })
-
 });
