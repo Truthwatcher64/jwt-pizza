@@ -23,6 +23,23 @@ test('login test', async ({ page }) => {
 
 });
 
+test('login admin', async ({page})=>{
+  await page.route('*/**/api/auth', async (route) => {
+    const loginReq = { email: 'boss@jwt.com', password: 'a' };
+    const loginRes = { user: { id: 3, name: 'Bossman', email: 'boss@jwt.com', roles: [{ role: 'admin' }] }, token: 'abcdef' };
+    expect(route.request().method()).toBe('PUT');
+    expect(route.request().postDataJSON()).toMatchObject(loginReq);
+    await route.fulfill({ json: loginRes });
+  });
+
+  await page.goto('http://localhost:5173/');
+  await page.getByRole('link', { name: 'Login' }).click();
+  await page.getByPlaceholder('Email address').click();
+  await page.getByPlaceholder('Email address').fill('boss@jwt.com');
+  await page.getByPlaceholder('Email address').press('Tab');
+  await page.getByPlaceholder('Password').fill('a');
+});
+
 test('purchase with login', async ({ page }) => {
   await page.route('*/**/api/order/menu', async (route) => {
     const menuRes = [
