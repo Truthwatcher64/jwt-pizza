@@ -20,24 +20,31 @@ test('login and go to admin dashboard', async ({ page }) => {
         await route.fulfill({ json: loginRes });
     });
 
-    // await page.route('*/**/api/franchise', async (route) => {
-    //     const loginReq = { stores: [], name: "abc", admins: [{ email: "a@jwt.com" }] };
-    //     const loginRes = {
-    //         "stores": [],
-    //         "name": "abc",
-    //         "admins": [
-    //             {
-    //                 "email": "a@jwt.com",
-    //                 "id": 1,
-    //                 "name": "常用名字"
-    //             }
-    //         ],
-    //         "id": 1
-    //     };
-    //     //expect(route.request().method()).toBe('POST');
-    //     //expect(route.request().postDataJSON()).toMatchObject(loginReq);
-    //     await route.fulfill({ json: loginRes });
-    // });
+    await page.route('*/**/api/franchise/3', async (route) => {
+        const loginRes =
+            [
+                {
+                    "id": 2,
+                    "name": "pizzaPocket",
+                    "admins": [
+                        {
+                            "id": 4,
+                            "name": "pizza franchisee",
+                            "email": "f@jwt.com"
+                        }
+                    ],
+                    "stores": [
+                        {
+                            "id": 4,
+                            "name": "SLC",
+                            "totalRevenue": 0
+                        }
+                    ]
+                }
+            ];
+        expect(route.request().method()).toBe('GET');
+        await route.fulfill({ json: loginRes });
+    });
 
 
 
@@ -65,32 +72,7 @@ test('login and go to admin dashboard', async ({ page }) => {
     await page.getByPlaceholder('franchise name').click();
     await page.getByPlaceholder('franchise name').fill('pizzaPocket');
 
-    // await page.route('*/**/api/franchise', async (route) => {
-    //     const loginReq = { stores: [], name: "abc", admins: [{ email: "a@jwt.com" }] };
-    //     const loginRes = {
-    //         "stores": [],
-    //         "name": "abc",
-    //         "admins": [
-    //             {
-    //                 "email": "a@jwt.com",
-    //                 "id": 1,
-    //                 "name": "常用名字"
-    //             }
-    //         ],
-    //         "id": 1
-    //     };
-    //     expect(route.request().method()).toBe('POST');
-    //     //expect(route.request().postDataJSON()).toMatchObject(loginReq);
-    //     await route.fulfill({ json: loginRes });
-    // });
 
-    // await page.getByRole('button', { name: 'Create' }).click();
-
-
-    // await expect(page.getByRole('heading')).toContainText('pizzaPocket');
-    // await page.getByRole('columnheader', { name: 'Name' }).click();
-    // await page.getByRole('columnheader', { name: 'Revenue' }).click();
-    // await page.getByRole('columnheader', { name: 'Action' }).click();
 
 });
 

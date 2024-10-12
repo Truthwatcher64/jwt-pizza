@@ -27,6 +27,36 @@ test('able', async ({ page }) => {
     await route.fulfill({ json: loginRes });
   });
 
+  await page.route('*/**/api/franchise', async (route) => {
+    const loginRes =
+      [
+        {
+          "id": 2,
+          "name": "pizzaPocket",
+          "admins": [
+            {
+              "id": 4,
+              "name": "pizza franchisee",
+              "email": "f@jwt.com"
+            }
+          ],
+          "stores": [
+          ]
+        }
+      ];
+    expect(route.request().method()).toBe('GET');
+    await route.fulfill({ json: loginRes });
+  });
+
+
+  await page.route('*/**/api/franchise/2/store/4', async (route) => {
+    expect(route.request().method()).toBe('DELETE');
+    const res = {
+      "message": "franchise deleted"
+    };
+
+    await route.fulfill({ json: res });
+  });
 
 
   await page.goto('http://localhost:5173/');
@@ -50,13 +80,25 @@ test('able', async ({ page }) => {
   await expect(page.locator('form')).toContainText('Want to create franchise?');
   await page.getByPlaceholder('franchise name').click();
   await page.getByPlaceholder('franchise name').fill('pizzaPocket');
+  await page.getByPlaceholder('franchisee admin email').click();
+  await page.getByPlaceholder('franchisee admin email').fill('a@jwt.com');
+
 
   await page.route('*/**/api/franchise', async (route) => {
-    const createReq = { "name": "pizzaPocket", "admins": [{ "email": "a@jwt.com" }] };
-    const createRes = { name: 'pizzaPocket', admins: [{ email: 'a@jwt.com', id: 1, name: '常用名字' }], id: 1 }
-    expect(route.request().method()).toBe('POST');
-    expect(route.request().postDataJSON()).toMatchObject(createReq);
-    await route.fulfill({ json: createRes });
+    const loginRes =
+    {
+      "name": "pizzaPocket",
+      "admins": [
+        {
+          "email": "f@jwt.com",
+          "id": 4,
+          "name": "pizza franchisee"
+        }
+      ],
+      "id": 1
+    };
+    //expect(route.request().method()).toBe('GET');
+    await route.fulfill({ json: loginRes });
   });
   await page.getByRole('button', { name: 'Create' }).click();
 });
