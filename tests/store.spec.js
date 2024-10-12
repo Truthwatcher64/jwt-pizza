@@ -10,6 +10,32 @@ test('create a store', async ({ page }) => {
         await route.fulfill({ json: loginRes });
     });
 
+    await page.route('*/**/api/franchise', async (route) => {
+        const loginRes =
+            [
+                {
+                    "id": 2,
+                    "name": "pizzaPocket",
+                    "admins": [
+                        {
+                            "id": 4,
+                            "name": "pizza franchisee",
+                            "email": "f@jwt.com"
+                        }
+                    ],
+                    "stores": [
+                        {
+                            "id": 4,
+                            "name": "SLC",
+                            "totalRevenue": 0
+                        }
+                    ]
+                }
+            ];
+        expect(route.request().method()).toBe('GET');
+        await route.fulfill({ json: loginRes });
+    });
+
 
     await page.goto('http://localhost:5173/');
     await page.getByRole('link', { name: 'Login' }).click();
@@ -20,21 +46,12 @@ test('create a store', async ({ page }) => {
     await page.getByPlaceholder('Password').press('Enter');
     await page.getByRole('link', { name: 'Admin' }).click();
 
-    await page.getByRole('button', { name: 'Add Franchise' }).click();
-    await expect(page.locator('form')).toContainText('Want to create franchise?');
-    await page.getByPlaceholder('franchise name').click();
-    await page.getByPlaceholder('franchise name').fill('pizzaPocket');
-    await page.getByPlaceholder('franchisee admin email').click();
-    await page.getByPlaceholder('franchisee admin email').fill('a@jwt.com');
 
-    // await page.route('*/**/api/franchise', async (route) => {
-    //     const createReq = { "name": "pizzaPocket", "admins": [{ "email": "a@jwt.com" }] };
-    //     const createRes = { name: 'pizzaPocket', admins: [{ email: 'a@jwt.com', id: 1, name: '常用名字' }], id: 1 }
-    //     expect(route.request().method()).toBe('POST');
-    //     expect(route.request().postDataJSON()).toMatchObject(createReq);
-    //     await route.fulfill({ json: createRes });
-    // });
+    await page.getByRole('cell', { name: 'pizzaPocket' }).click();
+    await page.getByRole('cell', { name: 'pizza franchisee' }).click();
+    await page.getByRole('row', { name: 'pizzaPocket pizza franchisee' }).getByRole('button').isVisible();
+    await page.getByRole('row', { name: 'SLC 0 ₿ Close' }).getByRole('button').isVisible();
 
-    await page.getByRole('button', { name: 'Create' }).click();
+
 
 });
