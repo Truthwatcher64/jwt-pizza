@@ -20,6 +20,27 @@ test('login and go to admin dashboard', async ({ page }) => {
         await route.fulfill({ json: loginRes });
     });
 
+    // await page.route('*/**/api/franchise', async (route) => {
+    //     const loginReq = { stores: [], name: "abc", admins: [{ email: "a@jwt.com" }] };
+    //     const loginRes = {
+    //         "stores": [],
+    //         "name": "abc",
+    //         "admins": [
+    //             {
+    //                 "email": "a@jwt.com",
+    //                 "id": 1,
+    //                 "name": "常用名字"
+    //             }
+    //         ],
+    //         "id": 1
+    //     };
+    //     //expect(route.request().method()).toBe('POST');
+    //     //expect(route.request().postDataJSON()).toMatchObject(loginReq);
+    //     await route.fulfill({ json: loginRes });
+    // });
+
+
+
 
 
     await page.goto('http://localhost:5173/');
@@ -45,12 +66,24 @@ test('login and go to admin dashboard', async ({ page }) => {
     await page.getByPlaceholder('franchise name').fill('pizzaPocket');
 
     // await page.route('*/**/api/franchise', async (route) => {
-    //     const createReq = { "name": "pizzaPocket", "admins": [{ "email": "a@jwt.com" }] };
-    //     const createRes = { name: 'pizzaPocket', admins: [{ email: 'a@jwt.com', id: 1, name: '常用名字' }], id: 1 }
+    //     const loginReq = { stores: [], name: "abc", admins: [{ email: "a@jwt.com" }] };
+    //     const loginRes = {
+    //         "stores": [],
+    //         "name": "abc",
+    //         "admins": [
+    //             {
+    //                 "email": "a@jwt.com",
+    //                 "id": 1,
+    //                 "name": "常用名字"
+    //             }
+    //         ],
+    //         "id": 1
+    //     };
     //     expect(route.request().method()).toBe('POST');
-    //     expect(route.request().postDataJSON()).toMatchObject(createReq);
-    //     await route.fulfill({ json: createRes });
+    //     //expect(route.request().postDataJSON()).toMatchObject(loginReq);
+    //     await route.fulfill({ json: loginRes });
     // });
+
     // await page.getByRole('button', { name: 'Create' }).click();
 
 

@@ -19,12 +19,13 @@ test('login then logout', async ({ page }) => {
   await page.getByPlaceholder('Password').fill('a');
   await page.getByRole('button', { name: 'Login' }).click();
 
+
+  await page.getByRole('link', { name: 'KC' }).click();
   await page.route('*/**/api/auth', async (route) => {
     const registerRes = { message: 'logout successful' }
     expect(route.request().method()).toBe('DELETE');
     await route.fulfill({ json: registerRes });
   });
-  await page.getByRole('link', { name: 'KC' }).click();
   await page.getByRole('link', { name: 'Logout' }).click();
   await page.getByText('The web\'s best pizza', { exact: true }).click();
 });

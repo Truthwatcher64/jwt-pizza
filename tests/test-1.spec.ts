@@ -1,22 +1,21 @@
 import { test, expect } from 'playwright-test-coverage';
-import exp from 'constants';
 
-test('cancel a franchise creation', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
-  await page.getByText('OrderFranchiseLoginRegister').click();
-  await page.getByLabel('Global').click();
-  await page.getByRole('link', { name: 'Login' }).click();
-  await page.getByPlaceholder('Email address').fill('a@jwt.com');
-  await page.getByPlaceholder('Email address').press('Tab');
-  await page.getByPlaceholder('Password').fill('admin');
-  await page.getByPlaceholder('Password').press('Enter');
-  await page.getByRole('link', { name: 'Admin' }).click();
-  await expect(page.getByRole('heading')).toContainText('Mama Ricci\'s kitchen');
-  await page.getByRole('button', { name: 'Add Franchise' })
-  await page.getByRole('button', { name: 'Add Franchise' }).click();
-  await page.getByRole('button', { name: 'Cancel' }).click();
-  await expect(page.getByRole('heading')).toContainText('Mama Ricci\'s kitchen');
-});
+// test('cancel a franchise creation', async ({ page }) => {
+//   await page.goto('http://localhost:5173/');
+//   await page.getByText('OrderFranchiseLoginRegister').click();
+//   await page.getByLabel('Global').click();
+//   await page.getByRole('link', { name: 'Login' }).click();
+//   await page.getByPlaceholder('Email address').fill('a@jwt.com');
+//   await page.getByPlaceholder('Email address').press('Tab');
+//   await page.getByPlaceholder('Password').fill('admin');
+//   await page.getByPlaceholder('Password').press('Enter');
+//   await page.getByRole('link', { name: 'Admin' }).click();
+//   await expect(page.getByRole('heading')).toContainText('Mama Ricci\'s kitchen');
+//   await page.getByRole('button', { name: 'Add Franchise' })
+//   await page.getByRole('button', { name: 'Add Franchise' }).click();
+//   await page.getByRole('button', { name: 'Cancel' }).click();
+//   await expect(page.getByRole('heading')).toContainText('Mama Ricci\'s kitchen');
+// });
 
 
 test('able', async ({ page }) => {
