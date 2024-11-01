@@ -113,7 +113,5 @@ jobs:
           generateReleaseNotes: true
           body: |
             ## Description
-
             ${{ github.event.head_commit.message }}
-
             **commit**: ${{ github.sha }}
